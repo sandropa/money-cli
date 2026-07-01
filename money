@@ -48,7 +48,8 @@ def sum_entries(prefix=None, n=12):
         print(month)
         for tag, total in sorted(data[month].items(), key=lambda x: -x[1]):
             print(f"  {tag:<20} {total:>10.2f} BAM")
-        print(f"  {'total':<20} {sum(data[month].values()):>10.2f} BAM")
+        print(f"  {'─'*35}")
+        print(f"\033[1m  {'total':<20} {sum(data[month].values()):>10.2f} BAM\033[0m")
         print()
 
 def completions():
