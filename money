@@ -19,7 +19,14 @@ def sync():
     os.chdir(CSV.parent)
     os.system(f'git add money.csv && git commit -m "{date.today()}" && git push')
 
+def completions():
+    if not CSV.exists(): return
+    with open(CSV) as f:
+        tags = {row[2] for row in csv.reader(f) if row}
+    print("\n".join(sorted(tags)))
+
 match sys.argv[1:]:
     case ["add", amount, tag]: add(amount, tag)
     case ["sync"]:             sync()
+    case ["--completions"]:    completions()
     case _: print("usage: money add <amount> <tag> | sync")

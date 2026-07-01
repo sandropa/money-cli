@@ -10,6 +10,12 @@ ln -sf ~/.local/src/money-cli/money ~/.local/bin/money
 chmod +x ~/.local/src/money-cli/money
 ```
 
+For tab completion, add this to `~/.bashrc`:
+
+```bash
+source ~/.local/src/money-cli/completions/money.bash
+```
+
 Then set up the data repo:
 
 ```bash
