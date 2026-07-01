@@ -28,5 +28,5 @@ cat ~/money/money.csv
 ## Sync
 
 ```bash
-cd ~/money && git add money.csv && git commit -m "$(date +%Y-%m-%d)" && git push
+money sync
 ```
