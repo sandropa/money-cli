@@ -1,0 +1,20 @@
+#!/usr/bin/env python3
+import csv, sys
+from datetime import date
+from pathlib import Path
+
+CSV = Path.home() / "money" / "money.csv"
+
+def add(amount, tag):
+    try:
+        amt = float(amount)
+    except ValueError:
+        sys.exit(f"error: '{amount}' is not a number")
+    CSV.parent.mkdir(exist_ok=True)
+    with open(CSV, "a", newline="") as f:
+        csv.writer(f).writerow([date.today(), amt, tag])
+    print(f"+ {amt:.2f} BAM  {tag}")
+
+match sys.argv[1:]:
+    case ["add", amount, tag]: add(amount, tag)
+    case _: print("usage: money add <amount> <tag>")
