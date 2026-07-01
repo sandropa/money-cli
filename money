@@ -24,10 +24,10 @@ def list_entries(n=10):
     if not CSV.exists(): return
     with open(CSV) as f:
         rows = list(csv.reader(f))
-    for d, amt, tag in rows[-int(n):]:
+    for d, amt, tag in reversed(rows[-int(n):]):
         print(f"{d}  {float(amt):>10.2f} BAM  {tag}")
 
-def sum_entries(prefix=None):
+def sum_entries(prefix=None, n=12):
     if not CSV.exists(): return
     data = defaultdict(lambda: defaultdict(float))  # month -> tag -> amount
     with open(CSV) as f:
@@ -36,7 +36,7 @@ def sum_entries(prefix=None):
             month = d[:7]
             key = tag if prefix else tag.split("-")[0]
             data[month][key] += float(amt)
-    for month in sorted(data, reverse=True):
+    for month in sorted(data, reverse=True)[:int(n)]:
         print(month)
         for tag, total in sorted(data[month].items(), key=lambda x: -x[1]):
             print(f"  {tag:<20} {total:>10.2f} BAM")
@@ -50,11 +50,13 @@ def completions():
     print("\n".join(sorted(tags)))
 
 match sys.argv[1:]:
-    case ["add", amount, tag]: add(amount, tag)
-    case ["list"]:             list_entries()
-    case ["list", n]:          list_entries(n)
-    case ["sum"]:              sum_entries()
-    case ["sum", prefix]:      sum_entries(prefix)
-    case ["sync"]:             sync()
-    case ["--completions"]:    completions()
-    case _: print("usage: money add <amount> <tag> | list [N] | sum [prefix] | sync")
+    case ["add", amount, tag]:          add(amount, tag)
+    case ["list"]:                      list_entries()
+    case ["list", n]:                   list_entries(n)
+    case ["sum"]:                       sum_entries()
+    case ["sum", "-n", n]:              sum_entries(n=n)
+    case ["sum", prefix]:               sum_entries(prefix=prefix)
+    case ["sum", prefix, "-n", n]:      sum_entries(prefix=prefix, n=n)
+    case ["sync"]:                      sync()
+    case ["--completions"]:             completions()
+    case _: print("usage: money add <amount> <tag> | list [N] | sum [prefix] [-n N] | sync")

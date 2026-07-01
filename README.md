@@ -28,7 +28,14 @@ git remote add origin git@github.com:YOUR_USERNAME/money-data.git
 ```bash
 money add 150 tutoring-alice
 money add 2000 freelance-project
-cat ~/money/money.csv
+
+money list          # last 10 entries, most recent first
+money list 25
+
+money sum           # monthly totals by top-level tag, last 12 months
+money sum -n 6      # last 6 months
+money sum instrukcije          # drill into instrukcije-* subtags
+money sum instrukcije -n 3
 ```
 
 ## Sync
