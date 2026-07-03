@@ -1,6 +1,6 @@
 # money
 
-CLI income tracker — logs to `~/money/money.csv`, syncs via private git repo.
+CLI income tracker — logs to `~/Documents/money.csv`.
 
 ## Install
 Git clone the repo to `~/.local/src`.
@@ -14,13 +14,6 @@ For tab completion, add this to `~/.bashrc`:
 
 ```bash
 source ~/.local/src/money-cli/completions/money.bash
-```
-
-Then set up the data repo:
-
-```bash
-mkdir -p ~/money && cd ~/money && git init
-git remote add origin git@github.com:YOUR_USERNAME/money-data.git
 ```
 
 ## Usage
@@ -39,10 +32,4 @@ money sum           # monthly totals by top-level tag, last 12 months
 money sum -n 6      # last 6 months
 money sum tutoring          # drill into tutoring-* subtags
 money sum tutoring -n 3
-```
-
-## Sync
-
-```bash
-money sync
 ```

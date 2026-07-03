@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-import csv, sys, os
+import csv, sys
 from datetime import date
 from pathlib import Path
 from collections import defaultdict
 
-CSV = Path.home() / "money" / "money.csv"
+CSV = Path.home() / "Documents" / "money.csv"
 
 def add(amount, tag, day=None):
     try:
@@ -23,10 +23,6 @@ def undo():
     if not lines: sys.exit("nothing to undo")
     print(f"removed: {lines[-1]}")
     CSV.write_text("\n".join(lines[:-1]) + ("\n" if len(lines) > 1 else ""))
-
-def sync():
-    os.chdir(CSV.parent)
-    os.system(f'git add money.csv && git commit -m "{date.today()}" && git push')
 
 def list_entries(n=10):
     if not CSV.exists(): return
@@ -68,6 +64,5 @@ match sys.argv[1:]:
     case ["sum", "-n", n]:              sum_entries(n=n)
     case ["sum", prefix]:               sum_entries(prefix=prefix)
     case ["sum", prefix, "-n", n]:      sum_entries(prefix=prefix, n=n)
-    case ["sync"]:                      sync()
     case ["--completions"]:             completions()
-    case _: print("usage: money add <amount> <tag> [date] | undo | list [N] | sum [prefix] [-n N] | sync")
+    case _: print("usage: money add <amount> <tag> [date] | undo | list [N] | sum [prefix] [-n N]")
